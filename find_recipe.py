@@ -143,7 +143,7 @@ for re in to_remove:
         # print(re)
         pass
 
-print(len(trial_list))
+print("Number of Recipe found: "+ str(len(trial_list)))
 f = open("recipe_to_try_%s.txt" % name, "w")
 for r in trial_list:
     f.write(str(r) + "\n")
