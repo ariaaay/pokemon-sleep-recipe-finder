@@ -97,9 +97,6 @@ def find_recipe(recipe_to_find, items_dict, pot_limit):
     return all_trial_list
 
 
-
-
-
 trial_list = find_recipe(recipe_to_find, items_dict, pot_limit)
 
 tried_dict = {}
@@ -111,7 +108,7 @@ try:
             try:
                 d = json.loads(line)
             except json.decoder.JSONDecodeError:
-                print(line)
+                pass
             try:
                 trial_list.remove(d)
             except ValueError:
@@ -127,8 +124,6 @@ except FileNotFoundError:
     f = open("tried_%s.txt" % dish, "w+")
     f.close()
 
-print(len(trial_list))
-
 to_remove = []
 for i, r1 in enumerate(trial_list):
     for j, r2 in enumerate(trial_list):
@@ -141,8 +136,6 @@ for i, r1 in enumerate(trial_list):
                     # print(r1)
                     # print(r2)
 
-print("further removing: ")
-print(len(to_remove))
 for re in to_remove:
     try:
         trial_list.remove(re)
