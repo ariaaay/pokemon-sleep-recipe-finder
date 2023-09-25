@@ -7,9 +7,9 @@ import json
 #########
 # MODIFY THE FOLLOWING. Change name to use it across multiple people.
 name = "aria"
-dish = "drinks"
-pot_limit = 48
-items_dict = {"apple": 9, "herb": 15, "sausage": 17, "honey": 3, "cacao": 4, "milk": 19, "soybean": 16, "oil": 17, "tomato": 13}
+dish = "stew"
+pot_limit = 34
+items_dict = {"apple": 5, "herb": 15, "sausage": 4, "honey": 3, "cacao": 4, "milk": 3, "soybean": 15, "oil": 20, "tomato": 11}
 ##########
 
 
@@ -114,8 +114,9 @@ try:
             except ValueError:
                 pass
 
-            for t in trial_list:
-                if set(t.keys()) == set(d.keys()):
+            tmp = trial_list.copy()
+            for t in tmp:
+                if set(t.keys()).issubset(set(d.keys())):
                     strictly_smaller = [t[k] <= d[k] for k in t.keys()]
                     if sum(strictly_smaller) == len(list(t.keys())):
                         trial_list.remove(t)
@@ -128,10 +129,10 @@ to_remove = []
 for i, r1 in enumerate(trial_list):
     for j, r2 in enumerate(trial_list):
         if i != j:
-            if set(r1.keys()) == set(r2.keys()):
-                strictly_smaller = [r1[k] <= r2[k] for k in r1.keys()]
-                if sum(strictly_smaller) == len(list(r1.keys())):
-                    to_remove.append(r1)
+            if set(r2.keys()).issubset(set(r1.keys())):
+                strictly_smaller = [r1[k] >= r2[k] for k in r2.keys()]
+                if sum(strictly_smaller) == len(list(r2.keys())):
+                    to_remove.append(r2)
                     # print("*****")
                     # print(r1)
                     # print(r2)
@@ -142,6 +143,8 @@ for re in to_remove:
     except ValueError:
         # print(re)
         pass
+
+
 
 print("Number of Recipe found: "+ str(len(trial_list)))
 f = open("recipe_to_try_%s.txt" % name, "w")
